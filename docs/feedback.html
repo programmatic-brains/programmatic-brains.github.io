@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Programmatic Brains - Feedback Form</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/uikit.min.css" />
+        <script src="js/uikit.min.js"></script>
+        <script src="js/uikit-icons.min.js"></script>
+        <style type="text/css">
+
+        </style>
+    </head>
+    <body>
+        <div class="uk-card uk-card-default uk-card-large uk-card-body">
+            <form id="my-form" action="https://formspree.io/mbjzwygn" method="POST">
+                <fieldset class="uk-fieldset">
+
+                    <legend class="uk-legend"><h2>Your Valuable Feedback Matters The Most</h2></legend>
+
+                    <div class="uk-margin">
+                        <label>Full Name</label><input class="uk-input" type="text" placeholder="Your Full Name" name="Fullname">
+                    </div>
+
+                    <div class="uk-margin">
+                        <label>Phone/Email (optional)</label><input class="uk-input" type="text" placeholder="Your Contact (optional)" name="Email">
+                    </div>
+
+                    <div class="uk-margin">
+                        <label style="text-transform: capitalize;">Any particular course that you would like to see on our channel</label><input class="uk-input" type="text" name="course">
+                    </div>
+
+                    <div class="uk-margin">
+                        <label style="text-transform: capitalize;">Any improvisation that you would like us to know about</label>
+                        <textarea class="uk-textarea" rows="15" placeholder="" name="feedback-main">
+                        </textarea>
+                    </div>
+
+                    <button id="my-form-button" class="uk-button uk-button-default" type="submit">Submit</button>
+
+                </fieldset>
+            </form>
+                <p id="my-form-status"></p>
+        </form>
+        </div>
+
+        <script>
+            window.addEventListener("DOMContentLoaded", function() {
+
+            // get the form elements defined in your form HTML above
+                
+            var form = document.getElementById("my-form");
+            var button = document.getElementById("my-form-button");
+            var status = document.getElementById("my-form-status");
+
+            // Success and Error functions for after the form is submitted
+                
+            function success() {
+                form.reset();
+                button.style = "display: none ";
+                status.innerHTML = "Thanks!";
+            }
+
+            function error() {
+                status.innerHTML = "Oops! There was a problem.";
+            }
+
+            // handle the form submission event
+
+            form.addEventListener("submit", function(ev) {
+                ev.preventDefault();
+                var data = new FormData(form);
+                ajax(form.method, form.action, data, success, error);
+            });
+            });
+              
+            // helper function for sending an AJAX request
+
+            function ajax(method, url, data, success, error) {
+                var xhr = new XMLHttpRequest();
+                xhr.open(method, url);
+                xhr.setRequestHeader("Accept", "application/json");
+                xhr.onreadystatechange = function() {
+                  if (xhr.readyState !== XMLHttpRequest.DONE) return;
+                  if (xhr.status === 200) {
+                    success(xhr.response, xhr.responseType);
+                  } else {
+                    error(xhr.status, xhr.response, xhr.responseType);
+                  }
+                };
+                xhr.send(data);
+            }
+        </script>
+    </body>
+</html>
